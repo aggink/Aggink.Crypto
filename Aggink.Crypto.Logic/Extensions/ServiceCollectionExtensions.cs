@@ -2,6 +2,7 @@
 using Aggink.Crypto.Logic.Interfaces.Services;
 using Aggink.Crypto.Logic.Repositories;
 using Aggink.Crypto.Logic.Services;
+using Aggink.Crypto.Refit.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aggink.Crypto.Logic.Extensions;
@@ -16,5 +17,8 @@ public static class ServiceCollectionExtensions
         // services
         service.AddSingleton<IRSACryptoService, RSACryptoService>();
         service.AddSingleton<ITextGeneratorService, TextGeneratorService>();
+
+        // refit
+        service.AddRefitServices();
     }
 }

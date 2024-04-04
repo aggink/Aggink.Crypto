@@ -8,10 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Aggink.Crypto.Refit\Aggink.Crypto.Refit.csproj" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

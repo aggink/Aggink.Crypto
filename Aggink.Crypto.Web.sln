@@ -3,16 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggink.Crypto.Web", "Aggink.Crypto.Web\Aggink.Crypto.Web.csproj", "{CCD69B7C-35C3-48D3-AD6E-4B16E5272A37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggink.Crypto.Web", "Aggink.Crypto.Web\Aggink.Crypto.Web.csproj", "{CCD69B7C-35C3-48D3-AD6E-4B16E5272A37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggink.Crypto.Logic", "Aggink.Crypto.Logic\Aggink.Crypto.Logic.csproj", "{BF730F88-6EEA-4BD8-9920-2A7C507F6E40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggink.Crypto.Logic", "Aggink.Crypto.Logic\Aggink.Crypto.Logic.csproj", "{BF730F88-6EEA-4BD8-9920-2A7C507F6E40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggink.Crypto.Web.Test", "Aggink.Crypto.Web.Test\Aggink.Crypto.Web.Test.csproj", "{52560AFE-831A-4688-9915-CD72662C8BC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggink.Crypto.Web.Test", "Aggink.Crypto.Web.Test\Aggink.Crypto.Web.Test.csproj", "{52560AFE-831A-4688-9915-CD72662C8BC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28973F4E-1185-46BE-A0F8-8D7CB8D39042}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggink.Crypto.Refit", "Aggink.Crypto.Refit\Aggink.Crypto.Refit.csproj", "{5CC9BA65-0819-4FF5-A0E7-287D1FCD91D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{52560AFE-831A-4688-9915-CD72662C8BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52560AFE-831A-4688-9915-CD72662C8BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52560AFE-831A-4688-9915-CD72662C8BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CC9BA65-0819-4FF5-A0E7-287D1FCD91D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC9BA65-0819-4FF5-A0E7-287D1FCD91D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC9BA65-0819-4FF5-A0E7-287D1FCD91D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC9BA65-0819-4FF5-A0E7-287D1FCD91D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
