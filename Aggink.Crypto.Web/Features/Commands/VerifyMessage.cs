@@ -36,30 +36,26 @@ public sealed class VerifyMessageCommandHandler : IRequestHandler<VerifyMessageC
 
     public async Task<bool> Handle(VerifyMessageCommand request, CancellationToken cancellationToken)
     {
-        return await Task.Run(() =>
+        bool success = false;
+        var encoder = new UTF8Encoding();
+
+        var byteContent = encoder.GetBytes(request.VerifyMessage.OriginalMessage);
+        var publicKey = _cryptoService.GetPublicKey(request.VerifyMessage.PublicKey);
+        var byteSignedContent = Convert.FromBase64String(request.VerifyMessage.SignedMessage);
+
+        using (var provider = new RSACryptoServiceProvider())
         {
-            bool success = false;
-            var encoder = new UTF8Encoding();
-
-            var byteContent = encoder.GetBytes(request.VerifyMessage.OriginalMessage);
-            var publicKey = _cryptoService.GetPublicKey(request.VerifyMessage.PublicKey);
-            var byteSignedContent = Convert.FromBase64String(request.VerifyMessage.SignedMessage);
-
-            using (var provider = new RSACryptoServiceProvider())
+            try
             {
-                try
-                {
-                    provider.ImportParameters(publicKey);
-                    success = provider.VerifyData(byteContent, CryptoConfig.MapNameToOID("SHA256"), byteSignedContent);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex.Message);
-                }
+                provider.ImportParameters(publicKey);
+                success = provider.VerifyData(byteContent, CryptoConfig.MapNameToOID("SHA256"), byteSignedContent);
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+        }
 
-            return success;
-
-        }, cancellationToken);
+        return success;
     }
 }

@@ -1,12 +1,12 @@
 ﻿using Aggink.Crypto.Logic.Interfaces.Services;
 using Aggink.Crypto.Web.Features.Commands;
 using Aggink.Crypto.Web.Features.DtoModels;
-using Aggink.Crypto.Web.Features.Queries;
 using Aggink.Crypto.Web.Test.Controllers.Refit;
 using Aggink.Crypto.Web.Test.Tools;
 using Aggink.Crypto.Web.Test.Tools.Extensions;
 using AutoFixture;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 using System.Security.Cryptography;
 
 namespace Aggink.Crypto.Web.Test.Controllers;
@@ -35,17 +35,15 @@ public class ManageControllerTests : SetUpTests
 
         var manageController = _factory.CreateApi<IManageController>();
 
-        var command = new VerifyMessageCommand()
+        var verifyMessage = new VerifyMessageDto()
         {
-            VerifyMessage = new VerifyMessageDto()
-            {
-                OriginalMessage = originalMessageTest,
-                PublicKey = rsaCryptoService.ToEncodedString(keys.Key),
-                SignedMessage = signedMessage
-            }
+            OriginalMessage = originalMessageTest,
+            PublicKey = rsaCryptoService.ToEncodedString(keys.Key),
+            SignedMessage = signedMessage
         };
 
-        var response = await manageController.VerifyMessage(command, _tokenSource.Token);
+        var response = await manageController.VerifyMessage(verifyMessage);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var isVerify = response.Content;
         Assert.That(isVerify, Is.EqualTo(result));
@@ -67,32 +65,38 @@ public class ManageControllerTests : SetUpTests
     {
         var manageController = _factory.CreateApi<IManageController>();
 
-        var createPublicKeyCommand = new CreatePublicKeyCommand();
+        var publicKeyResponse = await manageController.CreatePublicKey(new CreatePublicKeyCommand());
+        Assert.That(publicKeyResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        var publicKeyResponse = await manageController.CreatePublicKey(createPublicKeyCommand, _tokenSource.Token);
         var publicKey = publicKeyResponse.Content;
         Assert.NotNull(publicKey);
 
-        var getMessageWithCertificateQuery = new GetMessageWithCertificateQuery
-        {
-            Key = publicKey
-        };
+        var messageWithCertificateResponse = await manageController.MessageWithCertificate(publicKey);
+        Assert.That(messageWithCertificateResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        var messageWithCertificateResponse = await manageController.MessageWithCertificate(getMessageWithCertificateQuery, _tokenSource.Token);
         var messageWithCertificate = messageWithCertificateResponse.Content;
         Assert.NotNull(messageWithCertificate);
 
-        var verifyMessageCommand = new VerifyMessageCommand()
+        var verifyMessageQuery = new VerifyMessageDto()
         {
-            VerifyMessage = new VerifyMessageDto()
-            {
-                OriginalMessage = changeOrigMessage ? _fixture.Create<string>() : messageWithCertificate.OriginalMessage,
-                PublicKey = changePublicKey ? _fixture.Create<string>() : messageWithCertificate.PublicKey,
-                SignedMessage = changeSignedContent ? _fixture.Create<string>() : messageWithCertificate.SignedMessage
-            }
+            OriginalMessage = changeOrigMessage ? _fixture.Create<string>() : messageWithCertificate.OriginalMessage,
+            PublicKey = changePublicKey ? _fixture.Create<string>() : messageWithCertificate.PublicKey,
+            SignedMessage = changeSignedContent ? _fixture.Create<string>() : messageWithCertificate.SignedMessage
         };
 
-        var verifyMessageResponse = await manageController.VerifyMessage(verifyMessageCommand, _tokenSource.Token);
+        var verifyMessageResponse = await manageController.VerifyMessage(verifyMessageQuery);
+        if (result)
+        {
+            Assert.That(verifyMessageResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        }
+        else
+        {
+            Assert.That(
+                verifyMessageResponse.StatusCode == HttpStatusCode.InternalServerError ||
+                verifyMessageResponse.StatusCode == HttpStatusCode.BadRequest ||
+                verifyMessageResponse.StatusCode == HttpStatusCode.OK);
+        }
+
         var verifyMessage = verifyMessageResponse.Content;
         Assert.That(verifyMessage, Is.EqualTo(result));
     }
