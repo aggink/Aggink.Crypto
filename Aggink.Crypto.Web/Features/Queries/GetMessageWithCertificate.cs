@@ -6,8 +6,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Aggink.Crypto.Web.Features.Queries;
 
+/// <summary>
+/// Подписать текст пользователю
+/// </summary>
 public sealed class GetMessageWithCertificateQuery : IRequest<CertificateMessageDto>
 {
+    /// <summary>
+    /// Публичный ключ
+    /// </summary>
     [Required]
     [FromBody]
     public string Key { get; set; }

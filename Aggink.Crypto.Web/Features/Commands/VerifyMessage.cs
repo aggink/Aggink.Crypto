@@ -8,8 +8,14 @@ using System.Text;
 
 namespace Aggink.Crypto.Web.Features.Commands;
 
+/// <summary>
+/// Верификации сообщения
+/// </summary>
 public sealed class VerifyMessageCommand : IRequest<bool>
 {
+    /// <summary>
+    /// Сообщение
+    /// </summary>
     [Required]
     [FromBody]
     public VerifyMessageDto VerifyMessage { get; set; }
@@ -37,7 +43,7 @@ public sealed class VerifyMessageCommandHandler : IRequestHandler<VerifyMessageC
 
             var byteContent = encoder.GetBytes(request.VerifyMessage.OriginalMessage);
             var publicKey = _cryptoService.GetPublicKey(request.VerifyMessage.PublicKey);
-            var byteSignedContent = Convert.FromBase64String(request.VerifyMessage.SignedContent);
+            var byteSignedContent = Convert.FromBase64String(request.VerifyMessage.SignedMessage);
 
             using (var provider = new RSACryptoServiceProvider())
             {

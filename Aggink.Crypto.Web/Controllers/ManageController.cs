@@ -23,16 +23,20 @@ public class ManageController : Controller
     /// </summary>
     /// <param name="command">Dto параметр</param>
     /// <param name="cancellationToken">Токен отмены</param>
+    /// <remarks>Получаем и сохранение сообщение из стороннего api, возвращаем публичный ключ</remarks>
     /// <returns>Открытый ключ для пользователя</returns>
     [HttpPost(nameof(CreatePublicKey), Name = nameof(CreatePublicKey))]
     public async Task<ActionResult<string>> CreatePublicKey(CreatePublicKeyCommand command, CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var key = await _mediator.Send(command, cancellationToken);
         return Ok(key);
     }
 
     /// <summary>
-    /// Верификация полученного сообщения полученным ключом
+    /// Верификации сообщения
     /// </summary>
     /// <param name="command">Dto параметр</param>
     /// <param name="cancellationToken">Токен отмены</param>
@@ -40,6 +44,9 @@ public class ManageController : Controller
     [HttpPost(nameof(VerifyMessage), Name = nameof(VerifyMessage))]
     public async Task<ActionResult<bool>> VerifyMessage(VerifyMessageCommand command, CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _mediator.Send(command, cancellationToken);
         return Ok(result);
     }
@@ -47,12 +54,16 @@ public class ManageController : Controller
     /// <summary>
     /// Подписать текст пользователю
     /// </summary>
-    /// <param name="command">Dto параметр</param>
+    /// <param name="query">Dto параметр</param>
     /// <param name="cancellationToken">Токен отмены</param>
+    /// <remarks>По ключу находим полученное сообщение из сторонней api в памяти, подписываем его и возвращаем</remarks>
     /// <returns>Подписанный текст пользователя</returns>
-    [HttpGet(nameof(GetMessageWithCertificate), Name = nameof(GetMessageWithCertificate))]
-    public async Task<ActionResult<CertificateMessageDto>> GetMessageWithCertificate(GetMessageWithCertificateQuery query, CancellationToken cancellationToken)
+    [HttpPost(nameof(MessageWithCertificate), Name = nameof(MessageWithCertificate))]
+    public async Task<ActionResult<CertificateMessageDto>> MessageWithCertificate(GetMessageWithCertificateQuery query, CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var message = await _mediator.Send(query, cancellationToken);
         return Ok(message);
     }

@@ -1,5 +1,6 @@
 using Aggink.Crypto.Web.Extensions;
 using Aggink.Crypto.Web.Middlewares;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -29,6 +30,8 @@ builder.Services.AddSwaggerGen(c =>
     );
 });
 
+builder.Services.AddHttpLogging(o => o = new HttpLoggingOptions());
+
 builder.Services.AddWebServices();
 
 var app = builder.Build();
@@ -56,3 +59,5 @@ app.UseRouting();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

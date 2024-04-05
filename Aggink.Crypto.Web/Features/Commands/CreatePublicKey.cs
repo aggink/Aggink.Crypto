@@ -4,6 +4,9 @@ using MediatR;
 
 namespace Aggink.Crypto.Web.Features.Commands;
 
+/// <summary>
+/// Генерация открытого ключа для пользователя
+/// </summary>
 public sealed class CreatePublicKeyCommand : IRequest<string>
 {
 
