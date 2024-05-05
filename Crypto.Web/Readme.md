@@ -8,6 +8,9 @@
   - [TryFromBase64String(base64,content)](#M-Crypto-Web-Extensions-Base64StringExtensions-TryFromBase64String-System-String,System-Byte[]@- 'Crypto.Web.Extensions.Base64StringExtensions.TryFromBase64String(System.String,System.Byte[]@)')
 - [CreatePublicKeyCommand](#T-Crypto-Web-Features-Commands-CreatePublicKeyCommand 'Crypto.Web.Features.Commands.CreatePublicKeyCommand')
 - [ErrorResponse](#T-Crypto-Web-Middlewares-DtoModels-ErrorResponse 'Crypto.Web.Middlewares.DtoModels.ErrorResponse')
+  - [Code](#P-Crypto-Web-Middlewares-DtoModels-ErrorResponse-Code 'Crypto.Web.Middlewares.DtoModels.ErrorResponse.Code')
+  - [Details](#P-Crypto-Web-Middlewares-DtoModels-ErrorResponse-Details 'Crypto.Web.Middlewares.DtoModels.ErrorResponse.Details')
+  - [Message](#P-Crypto-Web-Middlewares-DtoModels-ErrorResponse-Message 'Crypto.Web.Middlewares.DtoModels.ErrorResponse.Message')
 - [ExceptionMiddleware](#T-Crypto-Web-Middlewares-ExceptionMiddleware 'Crypto.Web.Middlewares.ExceptionMiddleware')
   - [GetErrorResponse(context,ex)](#M-Crypto-Web-Middlewares-ExceptionMiddleware-GetErrorResponse-Microsoft-AspNetCore-Http-HttpContext,System-Exception- 'Crypto.Web.Middlewares.ExceptionMiddleware.GetErrorResponse(Microsoft.AspNetCore.Http.HttpContext,System.Exception)')
 - [FluentValidationModelState](#T-Crypto-Web-DataAnnotations-DtoModels-FluentValidationModelState 'Crypto.Web.DataAnnotations.DtoModels.FluentValidationModelState')
@@ -99,6 +102,27 @@ Crypto.Web.Features.Commands
 ##### Namespace
 
 Crypto.Web.Middlewares.DtoModels
+
+##### Summary
+
+Сообщение об ошибке
+
+<a name='P-Crypto-Web-Middlewares-DtoModels-ErrorResponse-Code'></a>
+### Code `property`
+
+##### Summary
+
+Код ошибки
+
+<a name='P-Crypto-Web-Middlewares-DtoModels-ErrorResponse-Details'></a>
+### Details `property`
+
+##### Summary
+
+Детали ошибки
+
+<a name='P-Crypto-Web-Middlewares-DtoModels-ErrorResponse-Message'></a>
+### Message `property`
 
 ##### Summary
 
