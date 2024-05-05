@@ -45,8 +45,6 @@ public sealed class ExceptionMiddleware
     /// <returns>Описание ошибки</returns>
     private (ErrorResponse Response, HttpStatusCode StatusCode) GetErrorResponse(HttpContext context, Exception ex)
     {
-        var response = new ErrorResponse();
-
         switch (ex)
         {
             case CryptoException cryptoException:
